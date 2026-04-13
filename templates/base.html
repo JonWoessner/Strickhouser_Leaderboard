@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+  {# block title: child templates override this to set their own <title> #}
+  {# If a child template doesn't override it, 'Arcade Leaderboard' is the default #}
+  <title>{% block title %}Arcade Leaderboard{% endblock %}</title>
+ 
+  {# This link tag appears once here and applies to every page that extends this template #}
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+ 
+  <nav>
+	{# url_for generates URLs from function names, not hardcoded paths #}
+	<a href="{{ url_for('home') }}">Home</a>
+	<a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+	<a href="{{ url_for('about') }}">About</a>
+  </nav>
+ 
+  <main>
+	{# block content: this is where each page's unique content goes #}
+	{# Child templates replace this block entirely #}
+	{% block content %}{% endblock %}
+  </main>
+ 
+  <footer>
+	<p>Arcade Leaderboard &copy; 2025</p>
+  </footer>
+</body>
+</html>
