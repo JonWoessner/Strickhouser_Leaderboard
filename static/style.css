@@ -1,0 +1,20 @@
+.text_style {
+    text-align: center
+}
+
+.table_style {
+    border: 2px solid darkslategrey; 
+    font-size:26px; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+.title_style {
+    text-align: center
+}
+
+.bg_style {
+    background-image: url("images/space-background.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover
+}

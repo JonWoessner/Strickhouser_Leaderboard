@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Title of thou Leaderboards{% endblock %}
+
+
+{% block content %}
+<h1 class= title_style>{{ title }}</h1>
+            
+    {%if scores%}
+            
+    <p class= text_style>{{ score_count }} Score(s) present</p>
+    <table class= table_style>
+        <thead class= text_style>
+            <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Score</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+
+        <tbody class= text_style>
+        {%for score in scores%}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ score.player | capitalize }}</td>
+                <td>{{ '{:,}'.format(score.score) }}</td>
+                <td>{{ score.year }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else%}
+    <p>No scroes here</p>
+    {% endif%}
+{% endblock %}
