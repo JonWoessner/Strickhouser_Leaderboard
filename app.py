@@ -1,17 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    page_title = "Title of thou Home"
-    return render_template('index.html', title=page_title)
-
-
-@app.route('/leaderboard_base')
-def lead_base():
-    page_title = "Game"
-    scores = [
+scores = [
     {'player': 'Ada', 'score': 9800, 'year': '20XX'},
     {'player': 'Grace', 'score': 8750, 'year': '20XX'},
     {'player': 'Alan', 'score': 7200, 'year': '20XX'},
@@ -21,7 +12,26 @@ def lead_base():
     {'player': 'Luke', 'score': 10450, 'year': '20XX'},
     {'player': 'Ava', 'score': 7780, 'year': '20XX'}
     ]
-    noscores = []
+
+@app.route('/')
+def home():
+    page_title = "Title of thou Home"
+    return render_template('index.html', title=page_title)
+@app.route('/submit', methods=['GET', 'POST'])
+def submit():
+    name = None
+    if request.method == 'POST':
+        name = request.form['name']
+        game = request.form['game']
+        score = request.form['score']
+
+        scores.append({'player': name, 'game': game, 'score': score})
+        
+    return render_template('forms.html', name=name)
+
+@app.route('/leaderboard_base')
+def lead_base():
+    page_title = "Game"
     return render_template(
     'leaderboard_base.html', 
     score_count = len(scores),

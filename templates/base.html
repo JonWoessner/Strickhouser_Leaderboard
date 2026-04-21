@@ -12,11 +12,12 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
- 
+
   <nav>
 	{# url_for generates URLs from function names, not hardcoded paths #}
 	<a href="{{ url_for('home') }}">Home</a>
 	<a href="{{ url_for('lead_base') }}">Leaderboard</a>
+	<a href="{{ url_for('submit') }}">Submit New Scores</a>
   </nav>
  
   <main>

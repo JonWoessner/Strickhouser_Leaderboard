@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form action="" method="POST">
+
+        <label for="student">Student:</label>
+        <input type="text" id="student" name="name">
+
+        <label for="Game">Game:</label>
+        <input type="text" id="grade" name="game">
+
+        <label for="score">Score:</label>
+        <input type="text" id="score" name="score">
+
+        <input type="submit" value="Submit">
+
+    </form>
+
+    {% if name %}
+        <p>Hello there, {{ name }}!</p>
+    {% endif %}
+    {% if name %}
+        <p>Hello there, {{ score }}!</p>
+    {% endif %}
+    {% if name %}
+        <p>Hello there, {{ year }}!</p>
+    {% endif %}
+</body>
+</html>
