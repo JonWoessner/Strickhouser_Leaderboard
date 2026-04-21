@@ -20,14 +20,26 @@ def home():
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
     name = None
+    error = None
     if request.method == 'POST':
-        name = request.form['name']
-        game = request.form['game']
-        score = request.form['score']
+        name = request.form['name'].strip()
+        game = request.form['game'].strip()
 
-        scores.append({'player': name, 'game': game, 'score': score})
+        if not name or not game:
+            error = "Blank Fields"
+            print('user left fields blank!')
+            # Force to re-enter data. TODO
+        try:
+            score = int(request.form['score'].strip())
+        except ValueError:
+            error = "Non-Number"
+            score = 0
+            # Need to force them to re-enter data. TODO
+        # only append score if no errors
+        if error == None:
+            scores.append( {'player': name, 'game': game, 'score': score} )
         
-    return render_template('forms.html', name=name)
+    return render_template('forms.html', name=name, error=error)
 
 @app.route('/leaderboard_base')
 def lead_base():

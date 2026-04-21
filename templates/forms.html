@@ -7,6 +7,12 @@
 </head>
 <body>
     
+    <nav>
+	{# url_for generates URLs from function names, not hardcoded paths #}
+	<a href="{{ url_for('home') }}">Home</a>
+	<a href="{{ url_for('lead_base') }}">Leaderboard</a>
+	<a href="{{ url_for('submit') }}">Submit New Scores</a>
+    </nav>
     <form action="" method="POST">
 
         <label for="student">Student:</label>
@@ -25,11 +31,8 @@
     {% if name %}
         <p>Hello there, {{ name }}!</p>
     {% endif %}
-    {% if name %}
-        <p>Hello there, {{ score }}!</p>
-    {% endif %}
-    {% if name %}
-        <p>Hello there, {{ year }}!</p>
+    {% if error %}
+        <p>You have the following error: {{ error }}</p>
     {% endif %}
 </body>
 </html>
