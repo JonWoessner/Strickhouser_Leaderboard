@@ -26,7 +26,7 @@ def submit():
 
     name = ''
     game = ''
-    score = 0
+    score = ''
     date = ''
     error = ''
     form_values = apply_form_values()
@@ -82,7 +82,7 @@ def submit():
         
     return render_template('forms.html', name=name, error=error, form_values=apply_form_values(name, game, score, date), options=games)
 
-def apply_form_values(name='', game='', score='', date='mm/dd/yyyy'):
+def apply_form_values(name='', game='', score='', date=''):
 
     return {'player': name, 'game': game, 'score': score, 'date': date}
 
