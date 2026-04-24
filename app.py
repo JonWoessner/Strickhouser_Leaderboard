@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-
+import datetime
 app = Flask(__name__)
 
 scores = [
@@ -47,7 +47,7 @@ def submit():
         try:
             score = int(request.form['score'].strip())
         except ValueError:
-            error = "Non-Number"
+            error = "score"
             score = 0
         
 
@@ -55,25 +55,25 @@ def submit():
             month = int(date[:2])
             day = int(date[3:5])
             year = int(date[6:])
+            formatted_date = datetime.date.today().strftime("%m/%d/%Y")
         except ValueError:
-            error = "Invalid date"
+            error = "date"
             date = 0
-
         try:
             if month > 12 or month < 00:
                 error = "Invalid date"
             elif day >= 31 or day < 0:
                 error = "Invalid date"
-            elif year < 2000:
-                error = "Invalid date"
+            elif year < 2000 or year > int(formatted_date[6:]):
+                error = "date"
         except UnboundLocalError:
-            error = "Invalid date"
+            error = "date"
 
         if not (name.isalpha()) or len(name) > 20:
-            error = "Invalid name"
+            error = "name"
         
         if score > max_scores.get(game) or score < 0:
-            error = "Bad Score"
+            error = "score"
         
         form_values = apply_form_values(name, game, score, date)
         # only append score if no errors
