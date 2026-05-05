@@ -21,7 +21,7 @@
         <label for="game">Game:</label>
             <select name="game" id="game">
                 {% for option in options %}
-                    <option value="{{ option }}">{{ option }}</option>
+                    <option value="{{ option['id'] }}">{{ option['game_name'] }}</option>
                 {% endfor %}
             </select>
 

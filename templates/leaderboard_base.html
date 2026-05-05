@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Title of thou Leaderboards{% endblock %}
+{% block meta %}<meta https-equiv="refresh" content="10">{%endblock%}
+{% block title %}Arcade Leaderboard{% endblock %}
 
 
 {% block content %}
 <h1 class= title_style>{{ title }}</h1>
-            
+    <p>Refresh count: {{count}}</p>
     {%if scores%}
             
     <p class= text_style>{{ score_count }} Score(s) present</p>
@@ -23,9 +24,9 @@
         {%for score in scores%}
             <tr>
                 <td>{{ loop.index }}</td>
-                <td>{{ score.player | capitalize }}</td>
+                <td>{{ score.player_name | capitalize }}</td>
                 <td>{{ '{:,}'.format(score.score) }}</td>
-                <td>{{ score.year }}</td>
+                <td>{{ score.game_name }}</td>
             </tr>
         {% endfor %}
         </tbody>

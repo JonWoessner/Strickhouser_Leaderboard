@@ -1,6 +1,25 @@
 from flask import Flask, render_template, request, redirect, url_for
 import datetime
+import sqlite3
+import os, time
+
+
 app = Flask(__name__)
+
+DATABASEPATH = '/home/lhoak/Projects/Strickhouser_Leaderboard/leaderboard.db'
+
+def get_current_game():
+    game_num = int(time.time() / 30) % 3 # replace 3 with number of game titles in the database
+    return game_num + 1
+def get_db_connection():
+    conn = sqlite3.connect(DATABASEPATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def init_db():
+    conn = get_db_connection()
+    ## TODO finish out using code from our examples
+    conn.close()
 
 scores = [
     {'player': 'Ada', 'game': 'Snake', 'score': 9800, 'date': '02/11/2008'},
@@ -34,6 +53,14 @@ def submit():
     max_scores = {
     'pacman': 100000, 'dk': 12345, 'snake': 100, 'digdug': 1000
     }
+
+
+    conn = get_db_connection()
+    games_list = conn.execute(''' 
+    SELECT id, game_name FROM games ORDER BY game_name;
+    ''').fetchall()
+    conn.close()
+
     if request.method == 'POST':
         name = request.form['name'].strip()
         game = request.form['game'].strip()
@@ -72,15 +99,19 @@ def submit():
         if not (name.isalpha()) or len(name) > 20:
             error = "name"
         
-        if score > max_scores.get(game) or score < 0:
-            error = "score"
         
         form_values = apply_form_values(name, game, score, date)
         # only append score if no errors
         if error == None:
             scores.append(form_values)
         
-    return render_template('forms.html', name=name, error=error, form_values=apply_form_values(name, game, score, date), options=games)
+        if error == None:
+            conn.execute('''
+        INSERT INTO scores (player_name, score, game_id) VALUES (?,?,?)
+        ''', (name, score, game))
+        conn.commit()
+
+    return render_template('forms.html', name=name, error=error, form_values=apply_form_values(name, game, score, date), options=games_list)
 
 def apply_form_values(name='', game='', score='', date=''):
 
@@ -89,11 +120,22 @@ def apply_form_values(name='', game='', score='', date=''):
 @app.route('/leaderboard_base')
 def lead_base():
     page_title = "Game"
+    conn = get_db_connection()
+    ## TODO change select to grab one game at a time, using the current time func we built
+    dbscores = conn.execute(''' 
+        SELECT  scores.player_name,
+                scores.score,
+                games.game_name AS game_name
+        FROM scores
+        INNER JOIN games ON scores.game_id = games.id
+        ORDER BY scores.score DESC
+''').fetchall()
     return render_template(
     'leaderboard_base.html', 
     score_count = len(scores),
     title = page_title,
-    scores = scores
+    scores = dbscores,
+    count=2
     )
 
 
