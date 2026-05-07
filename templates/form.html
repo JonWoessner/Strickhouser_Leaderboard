@@ -9,7 +9,11 @@
 
 
         <label for="game">Game: </label>
-        <input type="text" id = "game" name="gameid" value="{{ form_values.game }}">
+        <select id="game" name="game_id">
+            {%for game in games%}
+            <option value='{{ game["id"] }}'> {{ game["game"]}}</option>
+            {%endfor%}
+        </select>
 
         <label for="student">Player Name: </label>
         <input type="text" id = "student" name="pname" value="{{ form_values.player }}">
