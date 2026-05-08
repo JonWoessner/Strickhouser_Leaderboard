@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Title of thou Leaderboards{% endblock %}
+
+
+{% block content %}
+
+    <form action="" method="POST">
+
+
+        <label for="game">Game: </label>
+        <select id="game" name="game_id">
+            {%for game in games%}
+            <option value='{{ game["id"] }}'> {{ game["game"]}}</option>
+            {%endfor%}
+        </select>
+
+        <label for="student">Player Name: </label>
+        <input type="text" id = "student" name="pname" value="{{ form_values.player }}">
+
+        <label for="score">Score: </label>
+        <input type="text" id = "score" name="score" value="{{ form_values.score }}">
+
+        <label for="gradyear">Graduation Year: </label>
+        <input type="text" id = "gradyear" name="pgradyear" value="{{ form_values.date }}">
+
+
+        <input type="submit" value="Submit">
+    </form>
+    
+
+    {%if game%}
+        <p>Game, {{game}}</p>
+    {%endif%}
+    
+
+    {%if name%}
+        <p>Player, {{name}}</p>
+    {%endif%}
+    
+
+    {%if score%}
+        <p>Score, {{score}}</p>
+    {%endif%}
+    
+
+    {%if date%}
+        <p>Date, {{date}}</p>
+    {%endif%}
+    
+
+    {%if error%}
+        <p>ERROR_ {{error}}</p>
+    {%endif%}
+
+
+
+{% endblock %}

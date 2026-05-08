@@ -5,32 +5,62 @@ import os, time
 
 
 app = Flask(__name__)
-
-DATABASEPATH = '/home/lhoak/Projects/Strickhouser_Leaderboard/leaderboard.db'
+DATABASEPATH = 'leaderboard.db' #path to database
 
 def get_current_game():
-    game_num = int(time.time() / 30) % 3 # replace 3 with number of game titles in the database
-    return game_num + 1
+    '''divide current time to 30s windows to cycle through game titles'''
+    game_num = int(time.time() / 30) % 3 ##replace 3 with number of games in db
+    return game_num + 1 ##db starts indexing at 1, mod starts at 0
+
 def get_db_connection():
+    '''Setup db connection and return conn obj'''
     conn = sqlite3.connect(DATABASEPATH)
     conn.row_factory = sqlite3.Row
     return conn
 
 def init_db():
+    '''Inits a db if not already exist'''
     conn = get_db_connection()
-    ## TODO finish out using code from our examples
+    ##TODO Finish using code from example
     conn.close()
+    pass
+
 
 scores = [
-    {'player': 'Ada', 'game': 'Snake', 'score': 9800, 'date': '02/11/2008'},
-    {'player': 'Grace',  'game': 'DK', 'score': 8750, 'date': '02/11/2008' },
-    {'player': 'Alan', 'game': 'Digdug', 'score': 7200, 'date': '02/11/2008' },
-    {'player': 'Linus', 'game': 'DK', 'score': 6500, 'date': '02/11/2008' },
-    {'player': 'Bjarne', 'game': 'Mappy',  'score': 5900, 'date': '02/11/2008' },
-    {'player': 'Kevin', 'game': 'Pacman',  'score': 4000, 'date': '02/11/2008' },
-    {'player': 'Luke', 'game': 'Pacman',  'score': 10450, 'date': '02/11/2008' },
-    {'player': 'Ava', 'game': 'Digdug',  'score': 7780, 'date': '02/11/2008' }
+    {'player': 'Ada', 'score': 9800, 'year': '20XX'},
+    {'player': 'Grace', 'score': 8750, 'year': '20XX'},
+    {'player': 'Alan', 'score': 7200, 'year': '20XX'},
+    {'player': 'Linus', 'score': 6500, 'year': '20XX'},
+    {'player': 'Bjarne', 'score': 5900, 'year': '20XX'},
+    {'player': 'Kevin', 'score': 4000, 'year': '20XX'},
+    {'player': 'Luke', 'score': 10450, 'year': '20XX'},
+    {'player': 'Ava', 'score': 7780, 'year': '20XX'}
     ]
+
+valid_games = [
+    {'game': 'PACMAN', 'max_score': 10000},
+    {'game': 'DIGDUG', 'max_score': 10000},
+    {'game': 'FROGGER', 'max_score': 10000},
+    {'game': 'GALAGA', 'max_score': 10000},
+    {'game': 'MAPPY', 'max_score': 10000},
+    {'game': 'MS.PACMAN', 'max_score': 10000},
+    {'game': 'TETRIS', 'max_score': 10000},
+    {'game': '1970', 'max_score': 10000},
+    {'game': 'UNKNOWN', 'max_score': 10000},
+    {'game': 'UNKNOWN', 'max_score': 10000}
+]
+
+valid_game = {'PACMAN': 10000,
+              'DIGDUG': 10000,
+              'FROGGER': 10000,
+              'GALAGA': 10000,
+              'MAPPY': 10000,
+              'MS.PACMAN': 10000,
+              'TETRIS': 10000,
+              '1970': 10000,
+              'UNKNOWN1': 10000,
+              'UNKNOWN2': 10000}
+
 
 @app.route('/')
 def home():
@@ -39,105 +69,113 @@ def home():
 
 
 
-@app.route('/submit', methods=['GET', 'POST'])
-
-def submit():
-
-    name = ''
-    game = ''
-    score = ''
-    date = ''
-    error = ''
-    form_values = apply_form_values()
-    games = ['pacman', 'dk', 'snake', 'digdug']
-    max_scores = {
-    'pacman': 100000, 'dk': 12345, 'snake': 100, 'digdug': 1000
-    }
-
-
-    conn = get_db_connection()
-    games_list = conn.execute(''' 
-    SELECT id, game_name FROM games ORDER BY game_name;
-    ''').fetchall()
-    conn.close()
-
-    if request.method == 'POST':
-        name = request.form['name'].strip()
-        game = request.form['game'].strip()
-        date = request.form['date'].strip()
-
-        if not name or not game:
-            error = "Blank Fields"
-            print('user left fields blank!')
-        
-
-        try:
-            score = int(request.form['score'].strip())
-        except ValueError:
-            error = "score"
-            score = 0
-        
-
-        try:
-            month = int(date[:2])
-            day = int(date[3:5])
-            year = int(date[6:])
-            formatted_date = datetime.date.today().strftime("%m/%d/%Y")
-        except ValueError:
-            error = "date"
-            date = 0
-        try:
-            if month > 12 or month < 00:
-                error = "Invalid date"
-            elif day >= 31 or day < 0:
-                error = "Invalid date"
-            elif year < 2000 or year > int(formatted_date[6:]):
-                error = "date"
-        except UnboundLocalError:
-            error = "date"
-
-        if not (name.isalpha()) or len(name) > 20:
-            error = "name"
-        
-        
-        form_values = apply_form_values(name, game, score, date)
-        # only append score if no errors
-        if error == None:
-            scores.append(form_values)
-        
-        if error == None:
-            conn.execute('''
-        INSERT INTO scores (player_name, score, game_id) VALUES (?,?,?)
-        ''', (name, score, game))
-        conn.commit()
-
-    return render_template('forms.html', name=name, error=error, form_values=apply_form_values(name, game, score, date), options=games_list)
-
-def apply_form_values(name='', game='', score='', date=''):
-
-    return {'player': name, 'game': game, 'score': score, 'date': date}
 
 @app.route('/leaderboard_base')
 def lead_base():
     page_title = "Game"
+    #sorted_scores = sorted(scores, key= lambda entry: entry == {'score'}, reverse = True)
+    ## TODO change SELECT to grab 1 game at a time
+
     conn = get_db_connection()
-    ## TODO change select to grab one game at a time, using the current time func we built
-    dbscores = conn.execute(''' 
-        SELECT  scores.player_name,
-                scores.score,
-                games.game_name AS game_name
-        FROM scores
-        INNER JOIN games ON scores.game_id = games.id
-        ORDER BY scores.score DESC
-''').fetchall()
+    dbscores = conn.execute('''
+        SELECT  main.player, 
+                main.score, 
+                games.game AS game_id
+        FROM main
+        INNER JOIN games ON main.game_id = games.id
+        ORDER BY main.score DESC;
+    ''').fetchall()
+    conn.close()
+
     return render_template(
     'leaderboard_base.html', 
-    score_count = len(scores),
+    score_count = len(dbscores),
     title = page_title,
     scores = dbscores,
     count=2
     )
 
+
+
+
+@app.route('/newentry', methods=['GET', 'POST'])
+def submit():
+    game = None
+    name = None
+    score = None
+    date = None
+
+    error = None
+
+    form_values = {'player': '','game': '','score': '','date': ''}
+
+
+
+    # this runs when user 1st enters form submission page
+    conn = get_db_connection()
+    game_list = conn.execute('''SELECT id, game FROM games ORDER BY game''').fetchall()
+ 
+    
+
+
+    if request.method == 'POST':
+        game = request.form['game_id'].strip().upper()
+        name = request.form['pname'].strip().capitalize()
+        #score = int(request.form['score'])
+        date = request.form['pgradyear']
+
+
+        if not name or not game:
+            error = 'Blank Field'
+            print('Are you sure there is anything there')
+        
+        try:
+            score = int(request.form['score'])
+        except:
+            error = "What kinda number is that"
+            print('Are you sure thats a number')
+            score=0
+        
+
+        try:
+            request.form['gameid'].strip().upper() == valid_game.keys()
+        except:
+            error = "Invalid Game ID"
+            print('Are you sure thats a real game')
+            #print('Input', request.form['gameid'].upper().strip())
+            #print('Pair', valid_game.keys())
+            game=''
+            
+            #if request.form['gameid'].strip().upper() == valid_game.keys('PACMAN'):
+            #    pass
+
+
+
+        form_values = {'player': name,'game': game,'score': score,'date': date}
+
+
+        if error == None:
+            #scores.append({'player': name, 'score': score, 'year': date})
+            conn.execute('''
+                INSERT INTO main (player, score, game_id, date) VALUES (?,?,?,?)
+            ''', (name, score, game, date))
+            conn.commit()
+        
+    conn.close()
+    return render_template(
+        'form.html', 
+        game=game, 
+        name=name, 
+        score=score, 
+        date=date, 
+        error=error, 
+        form_values=form_values,
+        games=game_list
+        )
+
+
+#setup db if not done
+init_db()
 
 if __name__ == "__main__":
     app.run(debug=True)

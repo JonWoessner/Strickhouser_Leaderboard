@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../projects/leaderboard-flask"
+		},
+		{
+			"path": "../../repos/leaderboards"
+		},
+		{
+			"path": "../../repos/Leaderboard"
+		}
+	],
+	"settings": {}
+}

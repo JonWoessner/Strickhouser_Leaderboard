@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
-{% block meta %}<meta https-equiv="refresh" content="10">{%endblock%}
-{% block title %}Arcade Leaderboard{% endblock %}
+{%block meta%} <meta http-equiv="refresh" content="45"> {%endblock%}
+{% block title %}Title of thou Leaderboards{% endblock %}
 
 
 {% block content %}
@@ -26,7 +26,8 @@
                 <td>{{ loop.index }}</td>
                 <td>{{ score.player_name | capitalize }}</td>
                 <td>{{ '{:,}'.format(score.score) }}</td>
-                <td>{{ score.game_name }}</td>
+                <td>{{ score.game_id }}</td>
+
             </tr>
         {% endfor %}
         </tbody>
