@@ -50,10 +50,27 @@ CREATE TABLE IF NOT EXISTS games (
 #cursor.execute('INSERT INTO games (game) VALUES ("' + bob + '")')
 
 #cursor.execute('''INSERT INTO games (game) VALUES (?) ''', (rob,))  #tuple w/ only 1 val
-#cursor.execute('''INSERT INTO games (game, maxscore) VALUES (?,?) ''', ('ROMPERS',545160))
+
 #cursor.execute('''INSERT INTO testB (player, score, game_id) VALUES (?,?,?) ''', ('Yeva', 272913, 1))
 
-#conn.commit()
+
+
+### Backup Data if the Database gets lost
+#cursor.execute('''INSERT INTO games (game, maxscore) VALUES (?,?) ''', ('PAC-MAN',3333360))
+#cursor.execute('''INSERT INTO games (game, maxscore) VALUES (?,?) ''', ('FROGGER',1356520))
+#cursor.execute('''INSERT INTO games (game, maxscore) VALUES (?,?) ''', ('MS PAC-MAN',999990))
+#cursor.execute('''INSERT INTO games (game, maxscore) VALUES (?,?) ''', ('DIGDUG',5147610))
+#cursor.execute('''INSERT INTO games (game, maxscore) VALUES (?,?) ''', ('BURGERTIME',11512500))
+#cursor.execute('''INSERT INTO games (game, maxscore) VALUES (?,?) ''', ('1942',12572800))
+#cursor.execute('''INSERT INTO games (game, maxscore) VALUES (?,?) ''', ('DONKEYKONG',1272800))
+#cursor.execute('''INSERT INTO games (game, maxscore) VALUES (?,?) ''', ('GALAGA',20980450))
+#cursor.execute('''INSERT INTO games (game, maxscore) VALUES (?,?) ''', ('MAPPY',2313890))
+#cursor.execute('''INSERT INTO games (game, maxscore) VALUES (?,?) ''', ('ROMPERS',545160))
+
+
+
+
+conn.commit()
 
 cursor.execute('''
 SELECT main.player, main.score, games.game as game_id
