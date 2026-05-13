@@ -7,6 +7,7 @@ __pycache__/
 *.so
 
 *.code-workspace
+.claude
 
 # Distribution / packaging
 .Python
