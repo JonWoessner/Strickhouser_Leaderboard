@@ -97,6 +97,17 @@ def lead_base():
     )
 
 
+def new_score_highlight(date):
+    current_time = datetime.datetime.now().strftime("%m/%d/%Y")
+    if int(date[3:5]) > int(current_time[3:5]) and int(date[:2]) + 1 == int(current_time[:2]):
+        highlight = True
+    elif int(date[:2]) == int(current_time[:2]):
+        highlight = True
+    else:
+        highlight = False
+    print(highlight)
+    return highlight
+
 
 
 @app.route('/newentry', methods=['GET', 'POST'])
@@ -115,7 +126,7 @@ def submit():
     # this runs when user 1st enters form submission page
     conn = get_db_connection()
     game_list = conn.execute('''SELECT id, game FROM games ORDER BY game''').fetchall()
- 
+    
     
 
 
@@ -124,6 +135,12 @@ def submit():
         name = request.form['pname'].strip().capitalize()
         #score = int(request.form['score'])
         date = request.form['pgradyear']
+
+
+        if new_score_highlight(date):
+            highlight = True
+        else:
+            highlight = False
 
 
         if not name or not game:
@@ -136,7 +153,6 @@ def submit():
             error = "What kinda number is that"
             print('Are you sure thats a number')
             score=0
-        
 
         #try:
         #    request.form['gameid'].strip().upper() == valid_game.keys()
