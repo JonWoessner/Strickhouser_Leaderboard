@@ -8,8 +8,8 @@ app = Flask(__name__)
 DATABASEPATH = 'leaderboard.db' #path to database
 
 def get_current_game():
-    '''divide current time to 30s windows to cycle through game titles'''
-    game_num = int(time.time() / 30) % 3 ##replace 3 with number of games in db
+    '''divide current time to 45s windows to cycle through game titles'''
+    game_num = int(time.time() / 45) % 10 ##replace 3 with number of games in db
     return game_num + 1 ##db starts indexing at 1, mod starts at 0
 
 def get_db_connection():
@@ -64,7 +64,7 @@ valid_game = {'PACMAN': 10000,
 
 @app.route('/')
 def home():
-    page_title = "Title of thou Home"
+    page_title = "Strickhouser Arcade"
     return render_template('index.html', title=page_title)
 
 
@@ -80,7 +80,8 @@ def lead_base():
     dbscores = conn.execute('''
         SELECT  main.player, 
                 main.score, 
-                games.game AS game_id
+                games.game AS game_id,
+                main.date
         FROM main
         INNER JOIN games ON main.game_id = games.id
         ORDER BY main.score DESC;
@@ -137,14 +138,14 @@ def submit():
             score=0
         
 
-        try:
-            request.form['gameid'].strip().upper() == valid_game.keys()
-        except:
-            error = "Invalid Game ID"
-            print('Are you sure thats a real game')
+        #try:
+        #    request.form['gameid'].strip().upper() == valid_game.keys()
+        #except:
+        #    error = "Invalid Game ID"
+        #    print('Are you sure thats a real game')
             #print('Input', request.form['gameid'].upper().strip())
             #print('Pair', valid_game.keys())
-            game=''
+        #    game=''
             
             #if request.form['gameid'].strip().upper() == valid_game.keys('PACMAN'):
             #    pass
