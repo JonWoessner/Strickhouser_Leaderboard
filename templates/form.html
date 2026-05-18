@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Title of thou Leaderboards{% endblock %}
+{% block title %}Strickhouser Arcade - New Score Submissions{% endblock %}
 
 
 {% block content %}
@@ -21,9 +21,11 @@
         <label for="score">Score: </label>
         <input type="text" id = "score" name="score" value="{{ form_values.score }}">
 
-        <label for="gradyear">Graduation Year: </label>
-        <input type="text" id = "gradyear" name="pgradyear" value="{{ form_values.date }}">
-
+        <label for="gradyear">Date: </label>
+        <!--<input type="text" id = "gradyear" name="pgradyear" value="{{ form_values.date }}">
+        -->
+        <input type="date" text = "gradyear" name="pgradyear" value="{{ form_values.date }}">
+        
 
         <input type="submit" value="Submit">
     </form>

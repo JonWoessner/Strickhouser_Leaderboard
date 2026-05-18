@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 
 {%block meta%} <meta http-equiv="refresh" content="45"> {%endblock%}
-{% block title %}Title of thou Leaderboards{% endblock %}
+{% block title %}Strickhouser Arcade - Leaderboard{% endblock %}
 
 
 {% block content %}
 <h1 class= title_style>{{ title }}</h1>
-    <p>Refresh count: {{count}}</p>
+    <!--<p>Refresh count: {{count}}</p>
+    -->
     {%if scores%}
             
     <p class= text_style>{{ score_count }} Score(s) present</p>
@@ -16,7 +17,8 @@
                 <th>Rank</th>
                 <th>Player</th>
                 <th>Score</th>
-                <th>Year</th>
+                <th>Game</th>
+                <th>Date</th>
             </tr>
         </thead>
 
@@ -24,15 +26,16 @@
         {%for score in scores%}
             <tr>
                 <td>{{ loop.index }}</td>
-                <td>{{ score.player_name | capitalize }}</td>
+                <td>{{ score.player | capitalize }}</td>
                 <td>{{ '{:,}'.format(score.score) }}</td>
                 <td>{{ score.game_id }}</td>
+                <td>{{ score.date }}</td>
 
             </tr>
         {% endfor %}
         </tbody>
     </table>
     {% else%}
-    <p>No scroes here</p>
+    <p>No scores here</p>
     {% endif%}
 {% endblock %}
