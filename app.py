@@ -6,10 +6,11 @@ import os, time
 
 app = Flask(__name__)
 DATABASEPATH = 'leaderboard.db' #path to database
+NUMGAMES = 10
 
 def get_current_game():
     '''divide current time to 45s windows to cycle through game titles'''
-    game_num = int(time.time() / 45) % 10 ##replace 3 with number of games in db
+    game_num = int(time.time() / 45) % NUMGAMES 
     return game_num + 1 ##db starts indexing at 1, mod starts at 0
 
 def get_db_connection():
