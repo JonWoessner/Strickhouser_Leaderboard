@@ -17,8 +17,6 @@
                 <th>Rank</th>
                 <th>Player</th>
                 <th>Score</th>
-                <th>Game</th>
-                <th>Date</th>
             </tr>
         </thead>
 
@@ -28,8 +26,6 @@
                 <td>{{ loop.index }}</td>
                 <td>{{ score.player | capitalize }}</td>
                 <td>{{ '{:,}'.format(score.score) }}</td>
-                <td>{{ score.game_id }}</td>
-                <td>{{ score.date }}</td>
 
             </tr>
         {% endfor %}

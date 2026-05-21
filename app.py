@@ -40,42 +40,6 @@ def init_db():
     pass
 
 
-scores = [
-    {'player': 'Ada', 'score': 9800, 'year': '20XX'},
-    {'player': 'Grace', 'score': 8750, 'year': '20XX'},
-    {'player': 'Alan', 'score': 7200, 'year': '20XX'},
-    {'player': 'Linus', 'score': 6500, 'year': '20XX'},
-    {'player': 'Bjarne', 'score': 5900, 'year': '20XX'},
-    {'player': 'Kevin', 'score': 4000, 'year': '20XX'},
-    {'player': 'Luke', 'score': 10450, 'year': '20XX'},
-    {'player': 'Ava', 'score': 7780, 'year': '20XX'}
-    ]
-
-valid_games = [
-    {'game': 'PACMAN', 'max_score': 10000},
-    {'game': 'DIGDUG', 'max_score': 10000},
-    {'game': 'FROGGER', 'max_score': 10000},
-    {'game': 'GALAGA', 'max_score': 10000},
-    {'game': 'MAPPY', 'max_score': 10000},
-    {'game': 'MS.PACMAN', 'max_score': 10000},
-    {'game': 'TETRIS', 'max_score': 10000},
-    {'game': '1970', 'max_score': 10000},
-    {'game': 'UNKNOWN', 'max_score': 10000},
-    {'game': 'UNKNOWN', 'max_score': 10000}
-]
-
-valid_game = {'PACMAN': 10000,
-              'DIGDUG': 10000,
-              'FROGGER': 10000,
-              'GALAGA': 10000,
-              'MAPPY': 10000,
-              'MS.PACMAN': 10000,
-              'TETRIS': 10000,
-              '1970': 10000,
-              'UNKNOWN1': 10000,
-              'UNKNOWN2': 10000}
-
-
 @app.route('/')
 def home():
     page_title = "Strickhouser Arcade"
@@ -86,7 +50,6 @@ def home():
 
 @app.route('/leaderboard_base')
 def lead_base():
-    page_title = "Game"
     #sorted_scores = sorted(scores, key= lambda entry: entry == {'score'}, reverse = True)
     ## TODO change SELECT to grab 1 game at a time
 
@@ -104,6 +67,11 @@ def lead_base():
         ORDER BY main.score DESC;
     ''').fetchall()
     conn.close()
+
+    if len(dbscores) > 0:
+        page_title = dbscores[0]["game_id"]
+    else:
+        page_title = "TBD"
 
     return render_template(
     'leaderboard_base.html', 
@@ -150,8 +118,7 @@ def submit():
 
     if request.method == 'POST':
         game = request.form['game_id'].strip().upper()
-        name = request.form['pname'].strip().capitalize()
-        #score = int(request.form['score'])
+        name = request.form['pname'].strip()        #score = int(request.form['score'])
         date = request.form['pgradyear']
 
 
@@ -195,6 +162,7 @@ def submit():
                 INSERT INTO main (player, score, game_id, date) VALUES (?,?,?,?)
             ''', (name, score, game, date))
             conn.commit()
+            error = f"Score saved for {name}"
         
     conn.close()
     return render_template(

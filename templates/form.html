@@ -31,30 +31,9 @@
     </form>
     
 
-    {%if game%}
-        <p>Game, {{game}}</p>
-    {%endif%}
-    
-
-    {%if name%}
-        <p>Player, {{name}}</p>
-    {%endif%}
-    
-
-    {%if score%}
-        <p>Score, {{score}}</p>
-    {%endif%}
-    
-
-    {%if date%}
-        <p>Date, {{date}}</p>
-    {%endif%}
-    
-
     {%if error%}
-        <p>ERROR_ {{error}}</p>
+        <p>{{error}}</p>
     {%endif%}
-
 
 
 {% endblock %}
