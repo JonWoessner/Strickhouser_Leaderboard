@@ -1,4 +1,4 @@
 - add score highlight class in css
-- build out db w/ current scores
+DONE    - build out db w/ current scores
 - text is hard to read on current background, change text to white?
-- separate scores by game on refresh
+DONE    - separate scores by game on refresh

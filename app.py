@@ -10,8 +10,21 @@ NUMGAMES = 10
 
 def get_current_game():
     '''divide current time to 45s windows to cycle through game titles'''
-    game_num = int(time.time() / 45) % NUMGAMES 
+    game_num = int(time.time() / 15) % NUMGAMES 
     return game_num + 1 ##db starts indexing at 1, mod starts at 0
+
+gname = [
+    "/static/images/Pacman.jpg"
+    "/static/images/Frogger.jpg"
+    "/static/images/Ms. Pacman.jpg"
+    "/static/images/Digdug.jpg"
+    #"/static/images/.jpg"      We're missing Burgertime Image
+    #"/static/images/.jpg"      We're missing 1942 Image
+    "/static/images/Donkey Kong.jpg"
+    "/static/images/Galaga.jpg"
+    "/static/images/Mappy.jpg"
+    #"/static/images/.jpg"      We're missing Rompers Image
+]
 
 def get_db_connection():
     '''Setup db connection and return conn obj'''
@@ -78,13 +91,16 @@ def lead_base():
     ## TODO change SELECT to grab 1 game at a time
 
     conn = get_db_connection()
-    dbscores = conn.execute('''
+    gamenum = get_current_game()   #get current game via time
+    print("gamenum=",gamenum)
+    dbscores = conn.execute(f'''
         SELECT  main.player, 
                 main.score, 
                 games.game AS game_id,
                 main.date
         FROM main
         INNER JOIN games ON main.game_id = games.id
+        WHERE main.game_id = {gamenum}
         ORDER BY main.score DESC;
     ''').fetchall()
     conn.close()
@@ -95,19 +111,20 @@ def lead_base():
     title = page_title,
     scores = dbscores,
     count=2
+    #game_title_name = gname
     )
 
 
-def new_score_highlight(date):
-    current_time = datetime.datetime.now().strftime("%m/%d/%Y")
-    if int(date[3:5]) > int(current_time[3:5]) and int(date[:2]) + 1 == int(current_time[:2]):
-        highlight = True
-    elif int(date[:2]) == int(current_time[:2]):
-        highlight = True
-    else:
-        highlight = False
-    print(highlight)
-    return highlight
+#def new_score_highlight(date):
+#    current_time = datetime.datetime.now().strftime("%m/%d/%Y")
+#    if int(date[3:5]) > int(current_time[3:5]) and int(date[:2]) + 1 == int(current_time[:2]):
+#        highlight = True
+#    elif int(date[:2]) == int(current_time[:2]):
+#        highlight = True
+#    else:
+#        highlight = False
+#    print(highlight)
+#    return highlight
 
 
 
@@ -138,10 +155,10 @@ def submit():
         date = request.form['pgradyear']
 
 
-        if new_score_highlight(date):
-            highlight = True
-        else:
-            highlight = False
+        #if new_score_highlight(date):
+        #    highlight = True
+        #else:
+        #    highlight = False
 
 
         if not name or not game:
