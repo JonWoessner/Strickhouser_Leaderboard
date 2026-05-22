@@ -10,20 +10,20 @@ NUMGAMES = 10
 
 def get_current_game():
     '''divide current time to 45s windows to cycle through game titles'''
-    game_num = int(time.time() / 15) % NUMGAMES 
+    game_num = int(time.time() / 20) % NUMGAMES 
     return game_num + 1 ##db starts indexing at 1, mod starts at 0
 
-game_images = [
-    "/static/images/Pacman.jpg"
-    "/static/images/Frogger.jpg"
-    "/static/images/Ms. Pacman.jpg"
-    "/static/images/Digdug.jpg"
-    "/static/images/BurgerTime.jpg"
-    "/static/images/1942.jpg"
-    "/static/images/Donkey Kong.jpg"
-    "/static/images/Galaga.jpg"
-    "/static/images/Mappy.jpg"
-    "/static/images/Rompers.jpg"
+gimage = [
+    "/static/images/Pacman.jpg",
+    "/static/images/Frogger.jpg",
+    "/static/images/Ms. Pacman.jpg",
+    "/static/images/Digdug.jpg",
+    "/static/images/BurgerTime.jpg",
+    "/static/images/oneninefourtwo.jpg",
+    "/static/images/Donkey Kong.jpg",
+    "/static/images/Galaga.jpg",
+    "/static/images/Mappy.jpg",
+    "/static/images/Rompers.jpg",
 ]
 
 names = {

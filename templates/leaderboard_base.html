@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{%block meta%} <meta http-equiv="refresh" content="15"> {%endblock%}
+{%block meta%} <meta http-equiv="refresh" content="20"> {%endblock%}
 {% block title %}Strickhouser Arcade - Leaderboard{% endblock %}
 
 
@@ -21,7 +21,7 @@
             </tr>
         </thead>
 
-        <tbody class= "{{ gamename }}">
+        <tbody class= "{{ gamename }} text_style">
         {%for score in scores%}
             <tr>
                 <td>{{ loop.index }}</td>
