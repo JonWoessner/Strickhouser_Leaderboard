@@ -73,6 +73,11 @@ def lead_base():
     else:
         page_title = "TBD"
 
+
+    ## TODO pass in color codes for background and text based on game selected.
+    ##      also pass in link to image for game?
+    ##
+    ##      OR, pass in just game as the title, use as css class in html and customize colors in css
     return render_template(
     'leaderboard_base.html', 
     score_count = len(dbscores),
