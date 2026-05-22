@@ -13,17 +13,17 @@ def get_current_game():
     game_num = int(time.time() / 15) % NUMGAMES 
     return game_num + 1 ##db starts indexing at 1, mod starts at 0
 
-gname = [
+game_images = [
     "/static/images/Pacman.jpg"
     "/static/images/Frogger.jpg"
     "/static/images/Ms. Pacman.jpg"
     "/static/images/Digdug.jpg"
-    #"/static/images/.jpg"      We're missing Burgertime Image
-    #"/static/images/.jpg"      We're missing 1942 Image
+    "/static/images/BurgerTime.jpg"
+    "/static/images/1942.jpg"
     "/static/images/Donkey Kong.jpg"
     "/static/images/Galaga.jpg"
     "/static/images/Mappy.jpg"
-    #"/static/images/.jpg"      We're missing Rompers Image
+    "/static/images/Rompers.jpg"
 ]
 
 def get_db_connection():
