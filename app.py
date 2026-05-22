@@ -14,16 +14,16 @@ def get_current_game():
     return game_num + 1 ##db starts indexing at 1, mod starts at 0
 
 gname = [
-    "/static/images/Pacman.jpg"
-    "/static/images/Frogger.jpg"
-    "/static/images/Ms. Pacman.jpg"
-    "/static/images/Digdug.jpg"
-    #"/static/images/.jpg"      We're missing Burgertime Image
-    #"/static/images/.jpg"      We're missing 1942 Image
-    "/static/images/Donkey Kong.jpg"
-    "/static/images/Galaga.jpg"
-    "/static/images/Mappy.jpg"
-    #"/static/images/.jpg"      We're missing Rompers Image
+    "/static/images/Pacman.jpg",
+    "/static/images/Frogger.jpg",
+    "/static/images/Ms. Pacman.jpg",
+    "/static/images/Digdug.jpg",
+    "/static/images/burgertime.jpg",
+    "/static/images/oneninefourtwo.jpg",
+    "/static/images/Donkey Kong.jpg",
+    "/static/images/Galaga.jpg",
+    "/static/images/Mappy.jpg",
+    "/static/images/rompers.jpg"
 ]
 
 def get_db_connection():
@@ -83,8 +83,9 @@ def lead_base():
     score_count = len(dbscores),
     title = page_title,
     scores = dbscores,
-    count=2
-    #game_title_name = gname
+    count=2,
+    gname = gname,
+    game_image = gname[gamenum-1]
     )
 
 

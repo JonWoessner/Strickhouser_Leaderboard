@@ -8,10 +8,11 @@
 <h1 class= title_style>{{ title }}</h1>
     <!--<p>Refresh count: {{count}}</p>
     -->
+    <div class= 'container'>
+    <image class= 'image_style side-image' src="{{ game_image }}" alt="Game Image">
     {%if scores%}
             
-    <p class= text_style>{{ score_count }} Score(s) present</p>
-    <table class= table_style>
+    <table class= 'table_style side-table'>
         <thead class= text_style>
             <tr>
                 <th>Rank</th>
@@ -31,6 +32,7 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
     {% else%}
     <p>No scores here</p>
     {% endif%}
