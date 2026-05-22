@@ -26,6 +26,19 @@ game_images = [
     "/static/images/Rompers.jpg"
 ]
 
+names = {
+    1: "Pacman",
+    2: "Frogger",
+    3: "Ms_Pacman",
+    4: "Digdug",
+    5: "Burgertime",
+    6: "oneninefourtwo",
+    7: "Donkey_Kong",
+    8: "Galaga",
+    9: "Mappy",
+    10: "Rompers"
+}
+
 def get_db_connection():
     '''Setup db connection and return conn obj'''
     conn = sqlite3.connect(DATABASEPATH)
@@ -83,8 +96,9 @@ def lead_base():
     score_count = len(dbscores),
     title = page_title,
     scores = dbscores,
-    count=2
-    #game_title_name = gname
+    count=2,
+    gamename = names[gamenum],
+    game_image = gimage[gamenum-1]
     )
 
 
