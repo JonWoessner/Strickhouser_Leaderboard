@@ -16,8 +16,7 @@ label {
 }
 
 .table_style {
-    border: 2px solid darkslategrey; 
-    font-size:26px; 
+    font-size:32px; 
     margin-left: auto; 
     margin-right: auto; 
     border-collapse: separate;
@@ -28,12 +27,13 @@ label {
   display: flex;
   align-items: center;  /* Vertically aligns them in the center */
   justify-content: space-between; /* Creates equal space between them */
-  gap: 20px;            /* Sets a specific minimum gap */
+  gap: 2px;            /* Sets a specific minimum gap */
 }
 
 .side-image {
   max-width: 45%;       /* Ensures the image doesn't crowd the table */
   height: auto;
+  margin-left: auto;    /* Adds some space between the image and the table */
 }
 
 .side-table {
@@ -42,68 +42,49 @@ label {
 }
 
 .title_style {
-    text-align: center
+    text-align: center;
+    font-size: 64px;
 }
 
 .Digdug {
-    background-image: url("images/digdug.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: brown
+    background-color: tan;
+    color: brown;
 }
 
 .Donkey_Kong {
-    background-image: url("images/donkey_kong.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: red
+    background-color: black;
+    color: red;
 }
 
 .Frogger {
-    background-image: url("images/frogger.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: green
+    background-color: lightblue;
+    color: green;
 }
- .Galaga {
-    background-image: url("images/galaga.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: purple
+.Galaga {
+    background-color: orange;
+    color: purple;
 }
 .Pacman {
-    background-image: url("images/pacman.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: yellow
+    background-color: black;
+    color: yellow;
+}
+.Mappy {
+    background-color: lightyellow;
+    color: red;
 }
 .Ms_Pacman {
-    background-image: url("images/ms_pacman.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: pink
+    background-color: black;
+    color: pink;
 }  
-.Tetris {
-    background-image: url("images/tetris.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: cyan
-}
 .Rompers {
-    background-image: url("images/rompers.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: orange
+    background-color: tan;
+    color: orange;
 }
 .Burgertime {
-    background-image: url("images/burgertime.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: maroon
+    background-color: lightyellow;
+    color: maroon;
 }
 .oneninefourtwo {
-    background-image: url("images/1942.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: darkgreen
+    background-color: lightblue;
+    color: darkgreen;
 }

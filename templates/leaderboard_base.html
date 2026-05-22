@@ -5,15 +5,15 @@
 
 
 {% block content %}
-<h1 class= title_style>{{ title }}</h1>
+<h1 class= "{{ gamename }} title_style">{{ title }}</h1>
     <!--<p>Refresh count: {{count}}</p>
     -->
     <div class= 'container'>
     <image class= 'image_style side-image' src="{{ game_image }}" alt="Game Image">
     {%if scores%}
             
-    <table class= 'table_style side-table'>
-        <thead class= text_style>
+    <table class= '{{ gamename }} table_style side-table'>
+        <thead class= "{{ gamename }}">
             <tr>
                 <th>Rank</th>
                 <th>Player</th>
@@ -21,7 +21,7 @@
             </tr>
         </thead>
 
-        <tbody class= text_style>
+        <tbody class= "{{ gamename }}">
         {%for score in scores%}
             <tr>
                 <td>{{ loop.index }}</td>
