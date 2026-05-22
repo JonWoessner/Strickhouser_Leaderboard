@@ -24,7 +24,7 @@
         {%for score in scores%}
             <tr>
                 <td>{{ loop.index }}</td>
-                <td>{{ score.player | capitalize }}</td>
+                <td>{{ score.player}}</td>
                 <td>{{ '{:,}'.format(score.score) }}</td>
 
             </tr>
